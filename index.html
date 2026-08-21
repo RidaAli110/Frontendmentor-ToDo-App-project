@@ -1,36 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Todo app</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 0.6875rem; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body>
-
-  Todo
-
-  <!-- Add dynamic number --> items left
-
-  All
-  Active 
-  Completed
-
-  Clear Completed
-
-  Drag and drop to reorder list
-
-  <footer class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </footer>
-</body>
+    <title>Frontend Mentor | Todo app</title>
+  </head>
+  <body>
+    <!-- Top Header and toggle theme button -->
+    <div id="wrapper" class="center-aligned">
+      <header class="header">
+        <img src="images/bg-desktop-dark.jpg" class="head-image" />
+        <div class="heading">
+          <h1>TODO</h1>
+          <button>
+            <img src="/images/icon-sun.svg" alt="Light mode icon" />
+          </button>
+        </div>
+      </header>
+    </div>
+    <main>
+      <!-- Create New To Do -->
+      <section>
+        <input type="text" placeholder="Create a new todo..." />
+      </section>
+      <!-- Created Todos and completed buttons -->
+      <section class="list">
+        <button class="completed" type="button"></button>
+        <p class="list-item">My Todo list Item</p>
+      </section>
+      <section class="container">
+        <p>5 items left</p>
+        <div id="filter-container">
+          <button class="filter-btns" type="button">All</button>
+          <button class="filter-btns" type="button">Active</button>
+          <button class="filter-btns" type="button">Completed</button>
+        </div>
+        <button class="clear-completed">Clear Completed</button>
+      </section>
+    </main>
+    <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+      Coded by <a href="#">Rida</a>.
+    </footer>
+  </body>
 </html>
