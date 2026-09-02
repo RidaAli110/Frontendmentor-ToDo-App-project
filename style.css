@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
 * {
   box-sizing: border-box;
   padding: 0;
@@ -7,12 +8,14 @@
 :root {
   --dark--bg: hsl(235, 21%, 11%);
   --todo-list: hsl(235, 24%, 19%);
+  --heading-color: hsl(0, 0%, 98%);
 }
 
 body {
   min-height: 100vh;
   background-color: var(--dark--bg);
   font-family: Josefin Sans;
+  font-weight: 400;
 }
 
 .header {
@@ -37,7 +40,9 @@ body {
 }
 
 .heading h1 {
-  color: white;
+  font-weight: 700;
+  letter-spacing: 0.8rem;
+  color:var(--heading-color)
 }
 
 /* Remove background from image */
