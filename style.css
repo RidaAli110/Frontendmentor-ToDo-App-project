@@ -65,6 +65,9 @@ body {
 
 #add-item {
   width: 100%;
+  background-color: var(--todo-list);
+  padding: 1rem;
+  border: none;
 }
 
 main {
