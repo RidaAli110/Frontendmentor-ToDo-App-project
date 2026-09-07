@@ -71,12 +71,27 @@ body {
   max-width: 500px;
 }
 
+/* Creating The circle */
+.circle {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 18px;
+  height: 18px;
+  border: 1px solid #555;
+  border-radius: 50%;
+}
+
 #add-item {
   width: 100%;
   padding: 1rem;
+  padding-left: 40px;
   background-color: var(--todo-list);
   color: var(--light-grey-text-color);
   border: none;
+  border-radius: 5px;
 }
 
 main {
