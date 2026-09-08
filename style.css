@@ -100,6 +100,30 @@ main {
   align-items: center;
 }
 
+/* List container */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 500px;
+  padding: 1rem;
+  background-color: var(--todo-list);
+  border: none ;
+}
+
+/* List item  */
+.list-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  border-bottom: 1px solid grey;
+}
+
+/* Buttons and dynamic items left feature */
+.filterBtns-itemsLeft-clearBtn {
+  display: flex;
+}
+
 /* Footer */
 .attribution {
   position: fixed;
