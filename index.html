@@ -23,8 +23,8 @@
         <img src="images/bg-desktop-dark.jpg" class="head-image" />
         <div class="heading">
           <h1>TODO</h1>
-          <button class="theme-btn">
-            <img src="/images/icon-sun.svg" alt="Light mode icon" />
+          <button aria-label="Switch to Light theme" class="theme-btn">
+            <img src="/images/icon-sun.svg" alt="" />
           </button>
         </div>
       </header>
@@ -32,6 +32,7 @@
     <!-- Create New To Do -->
     <section class="input-container">
       <span class="circle"></span>
+      <label for="add-item" class="visually-hidden">Create a new todo</label>
       <input id="add-item" type="text" placeholder="Create a new todo..." />
     </section>
     <main>

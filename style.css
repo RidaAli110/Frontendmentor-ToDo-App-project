@@ -94,6 +94,18 @@ body {
   border-radius: 5px;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -108,7 +120,7 @@ main {
   max-width: 500px;
   padding: 1rem;
   background-color: var(--todo-list);
-  border: none ;
+  border: none;
 }
 
 /* List item  */
