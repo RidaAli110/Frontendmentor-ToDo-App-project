@@ -11,6 +11,8 @@
   --heading-color: hsl(0, 0%, 98%);
   --active-item-text-color: hsl(234, 39%, 85%);
   --light-grey-text-color: hsl(236, 9%, 61%);
+  --white-hover-btn-color: hsl(236, 33%, 92%);
+  --filter-focus: hsl(220, 98%, 61%);
 }
 
 body {
@@ -77,7 +79,6 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-
   width: 18px;
   height: 18px;
   border: 1px solid #555;
@@ -118,7 +119,9 @@ main {
   flex-direction: column;
   width: 80%;
   max-width: 500px;
-  padding: 1rem;
+  padding-top: 0.7rem;
+  position: relative;
+  top: -70px;
   background-color: var(--todo-list);
   border: none;
 }
@@ -127,13 +130,48 @@ main {
 .list-item {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px;
   border-bottom: 1px solid grey;
 }
 
 /* Buttons and dynamic items left feature */
 .filterBtns-itemsLeft-clearBtn {
   display: flex;
+  align-items: center;
+  padding: 1rem;
+  min-height: 40px;
+}
+
+.btns,
+.items-left {
+  color: var(--light-grey-text-color);
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+}
+
+.btns:hover {
+  color: var(--white-hover-btn-color);
+}
+
+.items-left {
+  color: var(--light-grey-text-color);
+  margin-right: auto;
+}
+
+#filter-container {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.filter-btns:focus {
+  color: var(--filter-focus);
+}
+
+.clear-completed {
+  margin-left: auto;
 }
 
 /* Footer */
@@ -142,7 +180,7 @@ main {
   left: 0;
   bottom: 10px;
   width: 100%;
-  color:white;
+  color: white;
   text-align: center;
 }
 
