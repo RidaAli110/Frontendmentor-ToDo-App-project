@@ -3,24 +3,31 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: inherit;
 }
 
 :root {
   --dark--bg: hsl(235, 21%, 11%);
   --todo-list: hsl(235, 24%, 19%);
+  --check-background: linear-gradient(
+    to bottom right,
+    hsl(192, 100%, 67%),
+    hsl(280, 87%, 65%)
+  );
   --heading-color: hsl(0, 0%, 98%);
-  --active-item-text-color: hsl(234, 39%, 85%);
+  --todo-list-text-color: hsl(234, 39%, 85%);
   --light-grey-text-color: hsl(236, 9%, 61%);
-  --white-hover-btn-color: hsl(236, 33%, 92%);
+  --white-hover-color: hsl(236, 33%, 92%);
   --filter-focus: hsl(220, 98%, 61%);
+  --grey-circle-border: #555;
 }
 
 body {
   min-height: 100vh;
   background-color: var(--dark--bg);
-  font-family: Josefin Sans;
+  font-family: 'Josefin Sans', sans-serif;
   font-weight: 400;
-  color: var(--active-item-text-color);
+  color: var(--todo-list-text-color);
 }
 
 .header {
@@ -63,6 +70,15 @@ body {
   cursor: pointer;
 }
 
+/* making light theme sun image rotate */
+.theme-btn img {
+  transition: transform 3s ease;
+}
+
+.theme-btn:hover img {
+  transform: rotate(360deg);
+}
+
 /* Create New Todo */
 .input-container {
   position: absolute;
@@ -79,20 +95,32 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  border: 1px solid #555;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--grey-circle-border);
   border-radius: 50%;
+  z-index: 1;
 }
 
 #add-item {
+  font-size: 1rem;
   width: 100%;
-  padding: 1rem;
-  padding-left: 40px;
+  padding: 1.2rem;
+  padding-left: 50px;
+  position: relative;
   background-color: var(--todo-list);
-  color: var(--light-grey-text-color);
+  color: var(--todo-list-text-color);
   border: none;
   border-radius: 5px;
+}
+
+#add-item::placeholder {
+  color: var(--light-grey-text-color);
+}
+
+#add-item:focus {
+  border: 1px solid var(--white-hover-color);
+  outline: none;
 }
 
 .visually-hidden {
@@ -111,6 +139,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: -75px;
+  position: relative;
 }
 
 /* List container */
@@ -120,10 +150,9 @@ main {
   width: 80%;
   max-width: 500px;
   padding-top: 0.7rem;
-  position: relative;
-  top: -70px;
   background-color: var(--todo-list);
   border: none;
+  border-radius: 5px;
 }
 
 /* List item  */
@@ -131,9 +160,50 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
-  padding: 10px;
-  border-bottom: 1px solid grey;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--grey-circle-border);
+}
+
+.list-text {
+  color: var(--todo-list-text-color);
+}
+
+/* Completed Button */
+.completed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+
+  border: 1px solid var(--grey-circle-border);
+  border-radius: 50%;
+  background: none;
+}
+
+.completed:hover {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--todo-list), var(--todo-list)) padding-box,
+    var(--check-background) border-box;
+}
+
+.completed img {
+  display: none;
+}
+
+/* When the todo is completed */
+.list-item.is-completed .completed {
+  background-color: var(--check-background);
+}
+
+.list-item.is-completed .completed img {
+  display: block;
+}
+
+.list-item.is-completed .list-text {
+  text-decoration: line-through;
 }
 
 /* Buttons and dynamic items left feature */
@@ -153,7 +223,7 @@ main {
 }
 
 .btns:hover {
-  color: var(--white-hover-btn-color);
+  color: var(--white-hover-color);
 }
 
 .items-left {
