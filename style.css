@@ -206,6 +206,13 @@ main {
   text-decoration: line-through;
 }
 
+.delete-btn {
+  background: none;
+  border: none;
+  margin-left: auto;
+}
+
+
 /* Buttons and dynamic items left feature */
 .filterBtns-itemsLeft-clearBtn {
   display: flex;
