@@ -187,6 +187,7 @@ main {
   border: 1px solid var(--grey-circle-border);
   border-radius: 50%;
   background: none;
+  cursor: pointer;
 }
 
 .completed:hover {
@@ -215,9 +216,14 @@ main {
 }
 
 .delete-btn {
+  display: none;
   background: none;
   border: none;
   margin-left: auto;
+}
+
+.list-item:hover .delete-btn {
+  display: block;
 }
 
 /* Buttons and dynamic items left feature */
@@ -238,6 +244,7 @@ main {
 
 .btns:hover {
   color: var(--white-hover-color);
+  cursor: pointer;
 }
 
 .items-left {
