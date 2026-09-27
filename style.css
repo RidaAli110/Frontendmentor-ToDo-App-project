@@ -195,7 +195,7 @@ main {
 
 /* When the todo is completed */
 .list-item.is-completed .completed {
-  background-color: var(--check-background);
+  background: var(--check-background);
 }
 
 .list-item.is-completed .completed img {
@@ -203,6 +203,7 @@ main {
 }
 
 .list-item.is-completed .list-text {
+  color: var(--light-grey-text-color);
   text-decoration: line-through;
 }
 
@@ -211,7 +212,6 @@ main {
   border: none;
   margin-left: auto;
 }
-
 
 /* Buttons and dynamic items left feature */
 .filterBtns-itemsLeft-clearBtn {
