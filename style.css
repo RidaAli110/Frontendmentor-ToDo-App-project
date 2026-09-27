@@ -143,7 +143,7 @@ main {
   position: relative;
 }
 
-/* List container */
+/* List container for items and filter buttons */
 .todo-list {
   display: flex;
   flex-direction: column;
@@ -153,6 +153,13 @@ main {
   background-color: var(--todo-list);
   border: none;
   border-radius: 5px;
+}
+
+/* ul list container */
+.todo-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 /* List item  */

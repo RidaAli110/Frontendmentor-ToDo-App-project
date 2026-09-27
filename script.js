@@ -5,9 +5,7 @@ The index method will not work
 
 'use strict';
 const input = document.getElementById('add-item');
-const filterContainer = document.querySelector(
-  '.filterBtns-itemsLeft-clearBtn',
-);
+const todoItems = document.querySelector('.todo-items');
 const listContainer = document.querySelector('.todo-list');
 
 // The localStorage array that has the text and completed state in an object
@@ -41,13 +39,13 @@ function addInputText(e) {
 
 // Create the todo
 function createTodo(todo, completed) {
-  const itemDiv = document.createElement('div');
-  itemDiv.classList.add('list-item');
+  const itemLi = document.createElement('li');
+  itemLi.classList.add('list-item');
 
   if (completed) {
-    itemDiv.classList.add('is-completed');
+    itemLi.classList.add('is-completed');
   }
-  itemDiv.innerHTML = `  <button
+  itemLi.innerHTML = `  <button
    aria-label="Mark todo as completed"
    class="completed"
    type="button" >
@@ -56,9 +54,9 @@ function createTodo(todo, completed) {
    <p class="list-text">${todo}</p>`;
 
   // Add the new todo item before the filter section
-  filterContainer.before(itemDiv);
+  todoItems.appendChild(itemLi);
 
-  createDeleteButton(itemDiv);
+  createDeleteButton(itemLi);
 }
 
 // Mark as Completed
@@ -81,12 +79,12 @@ function completed(e) {
 }
 
 // Creating delete button
-function createDeleteButton(itemDiv) {
+function createDeleteButton(itemLi) {
   const delBtn = document.createElement('button');
   delBtn.setAttribute('aria-label', 'Delete task');
   delBtn.classList.add('delete-btn');
   delBtn.innerHTML = `<img src="./images/icon-cross.svg"  alt='' />`;
-  itemDiv.appendChild(delBtn);
+  itemLi.appendChild(delBtn);
 }
 
 // Delete Item from list
