@@ -5,8 +5,15 @@ The index method will not work
 
 'use strict';
 const input = document.getElementById('add-item');
-const todoItems = document.querySelector('.todo-items');
+const todoItemsList = document.querySelector('.todo-items-list');
 const listContainer = document.querySelector('.todo-list');
+const itemsLeftCounter = document.querySelector('.items-left');
+const filterContainer = document.getElementById('filter-container');
+const clearBtn = document.querySelector('.clear-completed');
+const themeBtn = document.querySelector('.theme-btn');
+const headerImg = document.querySelector('.head-image');
+const themeIcon = document.querySelector('.theme-btn img');
+const mobileHeaderImg = document.querySelector('picture source');
 
 // The localStorage array that has the text and completed state in an object
 let todos = [];
@@ -25,6 +32,8 @@ function addTodo() {
 
   // save the todo to the localStorage todos array
   addToStorage(newItemText);
+
+  updateItemsLeft();
 
   input.value = '';
 }
@@ -54,7 +63,7 @@ function createTodo(todo, completed) {
    <p class="list-text">${todo}</p>`;
 
   // Add the new todo item before the filter section
-  todoItems.appendChild(itemLi);
+  todoItemsList.appendChild(itemLi);
 
   createDeleteButton(itemLi);
 }
@@ -73,6 +82,7 @@ function completed(e) {
     todos[completedIndex].completed = !todos[completedIndex].completed;
     // Save updated todos array to localStorage
     localStorage.setItem('savedTodos', JSON.stringify(todos));
+    updateItemsLeft();
 
     item.classList.toggle('is-completed');
   }
@@ -104,6 +114,108 @@ function deleteItem(e) {
     item.remove();
     // Remove todo from localStorage
     removeFromStorage(deletedIndex);
+    updateItemsLeft();
+  }
+}
+
+// Items left counter
+function itemsLeft() {
+  const activeTodos = todos.filter((todo) => {
+    return !todo.completed;
+  });
+  return activeTodos.length;
+}
+
+function updateItemsLeft() {
+  itemsLeftCounter.textContent = `${itemsLeft()} items left`;
+}
+
+// Filter Buttons
+function filterTodos(e) {
+  if (e.target.classList.contains('filter-btns')) {
+    const listItemsNodeList = document.querySelectorAll('.list-item');
+
+    const btns = document.querySelectorAll('.filter-btns');
+    btns.forEach((btn) => {
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    e.target.setAttribute('aria-pressed', 'true');
+
+    switch (e.target.dataset.filter) {
+      case 'all':
+        const listItems = listItemsNodeList;
+        const all = Array.from(listItems);
+        all.forEach((item) => {
+          item.style.display = '';
+        });
+        break;
+
+      case 'active':
+        const activeListItems = listItemsNodeList;
+        const active = Array.from(activeListItems);
+
+        active.forEach((todo, index) => {
+          if (!todos[index].completed) {
+            todo.style.display = '';
+          } else {
+            todo.style.display = 'none';
+          }
+        });
+        break;
+
+      case 'completed':
+        const completedItems = listItemsNodeList;
+        const completed = Array.from(completedItems);
+        completed.forEach((todo, index) => {
+          if (todos[index].completed) {
+            todo.style.display = '';
+          } else {
+            todo.style.display = 'none';
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+// Clear Completed button
+function clearCompleted() {
+  // Get all todo <li> elements currently displayed on the page
+  const listItems = document.querySelectorAll('.list-item');
+
+  // Check each DOM item against the corresponding todo in the todos array
+  listItems.forEach((item, index) => {
+    // If the corresponding todo is completed, remove it from the page
+    if (todos[index].completed) {
+      item.remove();
+    }
+  });
+
+  // Create a new array containing only the uncompleted todos
+  const active = todos.filter((todo) => {
+    return !todo.completed;
+  });
+
+  // Replace the old todos array with the filtered array
+  todos = active;
+
+  // Save the updated todos array to localStorage
+  localStorage.setItem('savedTodos', JSON.stringify(todos));
+}
+
+// Dark/ Light theme button
+function toggleTheme() {
+  document.body.classList.toggle('light-theme');
+  if (document.body.classList.contains('light-theme')) {
+    themeIcon.src = './images/icon-moon.svg';
+    headerImg.src = './images/bg-desktop-light.jpg';
+    mobileHeaderImg.srcset = './images/bg-mobile-light.jpg';
+  } else {
+    themeIcon.src = './images/icon-sun.svg';
+    headerImg.src = './images/bg-desktop-dark.jpg';
+    mobileHeaderImg.srcset = './images/bg-mobile-dark.jpg';
   }
 }
 
@@ -128,6 +240,7 @@ function loadTodosFromStorage() {
   savedItems.forEach((todo) => {
     createTodo(todo.text, todo.completed);
   });
+  updateItemsLeft();
 }
 
 // Remove from localStorage
@@ -144,3 +257,6 @@ function removeFromStorage(deletedIndex) {
 input.addEventListener('keydown', addInputText);
 listContainer.addEventListener('click', deleteItem);
 listContainer.addEventListener('click', completed);
+filterContainer.addEventListener('click', filterTodos);
+clearBtn.addEventListener('click', clearCompleted);
+themeBtn.addEventListener('click', toggleTheme);
