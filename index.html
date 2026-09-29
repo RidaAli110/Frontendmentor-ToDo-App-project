@@ -29,18 +29,19 @@
         </picture>
         <div class="heading">
           <h1>TODO</h1>
-          <button aria-label="Switch to Light theme" class="theme-btn">
+          <button aria-label="Switch to Light theme" class="theme-btn" type="button">
             <img src="/images/icon-sun.svg" alt="" />
           </button>
         </div>
       </header>
     </div>
+    <section></section>
     <!-- Create New To Do -->
-    <div class="input-container">
+    <section aria-label="Create new todo" class="input-container">
       <span class="circle"></span>
       <label for="add-item" class="visually-hidden">Create a new todo</label>
       <input id="add-item" type="text" placeholder="Create a new todo..." />
-    </div>
+    </section>
     <main>
       <!-- Created Todos and completed buttons -->
       <section class="todo-list">
@@ -50,17 +51,32 @@
         <div class="filterBtns-itemsLeft-clearBtn">
           <p aria-live="polite" class="items-left">0 items left</p>
           <div id="filter-container">
-            <button data-filter="all" aria-pressed="true" class="filter-btns btns" type="button">
+            <button
+              data-filter="all"
+              aria-pressed="true"
+              class="filter-btns btns"
+              type="button"
+            >
               All
             </button>
-            <button data-filter="active" aria-pressed="false" class="filter-btns btns" type="button">
+            <button
+              data-filter="active"
+              aria-pressed="false"
+              class="filter-btns btns"
+              type="button"
+            >
               Active
             </button>
-            <button data-filter="completed" aria-pressed="false" class="filter-btns btns" type="button">
+            <button
+              data-filter="completed"
+              aria-pressed="false"
+              class="filter-btns btns"
+              type="button"
+            >
               Completed
             </button>
           </div>
-          <button class="clear-completed btns">Clear Completed</button>
+          <button type="button" class="clear-completed btns">Clear Completed</button>
         </div>
       </section>
     </main>
