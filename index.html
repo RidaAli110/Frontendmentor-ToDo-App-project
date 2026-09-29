@@ -44,19 +44,19 @@
     <main>
       <!-- Created Todos and completed buttons -->
       <section class="todo-list">
-        <ul class="todo-items">
+        <ul class="todo-items-list">
           <!-- JavaScript will add each list item -->
         </ul>
         <div class="filterBtns-itemsLeft-clearBtn">
-          <p aria-live="polite" class="items-left">5 items left</p>
+          <p aria-live="polite" class="items-left">0 items left</p>
           <div id="filter-container">
-            <button aria-pressed="true" class="filter-btns btns" type="button">
+            <button data-filter="all" aria-pressed="true" class="filter-btns btns" type="button">
               All
             </button>
-            <button aria-pressed="false" class="filter-btns btns" type="button">
+            <button data-filter="active" aria-pressed="false" class="filter-btns btns" type="button">
               Active
             </button>
-            <button aria-pressed="false" class="filter-btns btns" type="button">
+            <button data-filter="completed" aria-pressed="false" class="filter-btns btns" type="button">
               Completed
             </button>
           </div>
@@ -65,7 +65,7 @@
       </section>
     </main>
     <footer class="attribution">
-      Challenge by
+      Challenge by&nbsp;
       <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
       Coded by Rida.
     </footer>

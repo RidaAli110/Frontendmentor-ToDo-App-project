@@ -7,7 +7,7 @@
 }
 
 :root {
-  --dark--bg: hsl(235, 21%, 11%);
+  --bg: hsl(235, 21%, 11%);
   --todo-list: hsl(235, 24%, 19%);
   --check-background: linear-gradient(
     to bottom right,
@@ -18,13 +18,31 @@
   --todo-list-text-color: hsl(234, 39%, 85%);
   --light-grey-text-color: hsl(236, 9%, 61%);
   --white-hover-color: hsl(236, 33%, 92%);
-  --filter-focus: hsl(220, 98%, 61%);
-  --grey-circle-border: #555;
+  --filter-active: hsl(220, 98%, 61%);
+  --grey-circle-border: hsl(0, 0%, 33%);
+  --footer-text: hsl(0, 0%, 100%);
+  --footer-link: hsl(195, 53%, 79%);
+  --input-focus: hsl(236, 33%, 92%): ;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.light-theme {
+  --bg: hsl(0, 0%, 98%);
+  --todo-list: white;
+  --todo-list-text-color: hsl(235, 19%, 35%);
+  --white-hover-color: hsl(235, 19%, 35%);
+  --grey-circle-border: hsl(233, 11%, 84%);
+  --footer-text: black;
+  --footer-link: blue;
+  --input-focus: hsl(235, 19%, 35%);
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background-color: var(--dark--bg);
+  background-color: var(--bg);
   font-family: 'Josefin Sans', sans-serif;
   font-weight: 400;
   color: var(--todo-list-text-color);
@@ -112,6 +130,7 @@ body {
   color: var(--todo-list-text-color);
   border: none;
   border-radius: 5px;
+  box-shadow: var(--box-shadow);
 }
 
 #add-item::placeholder {
@@ -119,8 +138,7 @@ body {
 }
 
 #add-item:focus {
-  border: 1px solid var(--white-hover-color);
-  outline: none;
+  border: 1px solid var(--input-focus);
 }
 
 .visually-hidden {
@@ -138,6 +156,7 @@ body {
 main {
   display: flex;
   flex-direction: column;
+  flex: 1;
   align-items: center;
   margin-top: -75px;
   position: relative;
@@ -153,10 +172,11 @@ main {
   background-color: var(--todo-list);
   border: none;
   border-radius: 5px;
+  box-shadow: var(--box-shadow);
 }
 
 /* ul list container */
-.todo-items {
+.todo-items-list {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -257,8 +277,8 @@ main {
   gap: 0.8rem;
 }
 
-.filter-btns:focus {
-  color: var(--filter-focus);
+.filter-btns[aria-pressed='true'] {
+  color: var(--filter-active);
 }
 
 .clear-completed {
@@ -267,14 +287,57 @@ main {
 
 /* Footer */
 .attribution {
-  position: fixed;
-  left: 0;
-  bottom: 10px;
   width: 100%;
-  color: white;
+  margin-top: 4rem;
+  color: var(--footer-text);
   text-align: center;
 }
 
 .attribution a {
-  color: lightblue;
+  color: var(--footer-link);
+}
+
+/* showing the delete button for tablet users and mobile */
+@media (max-width: 770px) {
+  .delete-btn {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .head-image {
+    height: 250px;
+  }
+  .input-container,
+  .todo-list {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .todo-list {
+    position: relative;
+  }
+  #filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background: var(--todo-list);
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+  }
+}
+
+@media (max-width: 370px) {
+  .attribution {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
