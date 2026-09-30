@@ -18,6 +18,7 @@ const mobileHeaderImg = document.querySelector('picture source');
 // The localStorage array that has the text and completed state in an object
 let todos = [];
 
+loadThemeFromStorage();
 loadTodosFromStorage();
 
 function addTodo() {
@@ -211,14 +212,23 @@ function clearCompleted() {
 // Dark/ Light theme button
 function toggleTheme() {
   document.body.classList.toggle('light-theme');
-  if (document.body.classList.contains('light-theme')) {
+  const light = document.body.classList.contains('light-theme');
+
+  if (light) {
     themeIcon.src = './images/icon-moon.svg';
     headerImg.src = './images/bg-desktop-light.jpg';
     mobileHeaderImg.srcset = './images/bg-mobile-light.jpg';
+    themeBtn.setAttribute('aria-label', 'Switch to dark mode');
+    
+    localStorage.setItem('theme', 'light');
   } else {
     themeIcon.src = './images/icon-sun.svg';
     headerImg.src = './images/bg-desktop-dark.jpg';
     mobileHeaderImg.srcset = './images/bg-mobile-dark.jpg';
+    themeBtn.setAttribute('aria-label', 'Switch to light mode');
+
+    // saves the current theme to local storage
+    localStorage.setItem('theme', 'dark');
   }
 }
 
@@ -244,6 +254,18 @@ function loadTodosFromStorage() {
     createTodo(todo.text, todo.completed);
   });
   updateItemsLeft();
+}
+
+// Loads the theme from local storage when page refreshes
+function loadThemeFromStorage() {
+  const savedTheme = localStorage.getItem('theme') ?? 'dark';
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+    themeIcon.src = './images/icon-moon.svg';
+    headerImg.src = './images/bg-desktop-light.jpg';
+    mobileHeaderImg.srcset = './images/bg-mobile-light.jpg';
+    themeBtn.setAttribute('aria-label', 'Switch to dark mode');
+  }
 }
 
 // Remove from localStorage
