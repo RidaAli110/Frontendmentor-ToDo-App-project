@@ -47,22 +47,25 @@ function addInputText(e) {
 }
 
 // Create the todo
-function createTodo(todo, completed) {
+function createTodo(todoText, completed) {
   const itemLi = document.createElement('li');
   itemLi.classList.add('list-item');
 
   if (completed) {
     itemLi.classList.add('is-completed');
   }
-  itemLi.innerHTML = `  <button
-   aria-label="Mark todo as completed"
-   class="completed"
-   type="button" >
-   <img src="./images/icon-check.svg" alt="" />
-   </button>
-   <p class="list-text">${todo}</p>`;
+  const completedBtn = document.createElement('button');
+  completedBtn.setAttribute('aria-label', 'Mark Todo as completed');
+  completedBtn.innerHTML = `<img src="./images/icon-check.svg" alt="" />`;
+  completedBtn.classList.add('completed');
+  const noteText = document.createElement('p');
+  noteText.classList.add('list-text');
+  noteText.textContent = todoText;
 
-  // Add the new todo item before the filter section
+  // Add the complete button and the note Text to the list item
+  itemLi.append(completedBtn, noteText);
+
+  // Add the new todo item to the list container
   todoItemsList.appendChild(itemLi);
 
   createDeleteButton(itemLi);
