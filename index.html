@@ -29,20 +29,23 @@
         </picture>
         <div class="heading">
           <h1>TODO</h1>
-          <button aria-label="Switch to Light theme" class="theme-btn" type="button">
+          <button
+            aria-label="Switch to light mode"
+            class="theme-btn"
+            type="button"
+          >
             <img src="/images/icon-sun.svg" alt="" />
           </button>
         </div>
       </header>
     </div>
-    <section></section>
     <!-- Create New To Do -->
-    <section aria-label="Create new todo" class="input-container">
-      <span class="circle"></span>
-      <label for="add-item" class="visually-hidden">Create a new todo</label>
-      <input id="add-item" type="text" placeholder="Create a new todo..." />
-    </section>
     <main>
+      <section aria-label="Create new todo" class="input-container">
+        <span class="circle"></span>
+        <label for="add-item" class="visually-hidden">Create a new todo</label>
+        <input id="add-item" type="text" placeholder="Create a new todo..." />
+      </section>
       <!-- Created Todos and completed buttons -->
       <section class="todo-list">
         <ul class="todo-items-list">
@@ -76,7 +79,9 @@
               Completed
             </button>
           </div>
-          <button type="button" class="clear-completed btns">Clear Completed</button>
+          <button type="button" class="clear-completed btns">
+            Clear Completed
+          </button>
         </div>
       </section>
     </main>

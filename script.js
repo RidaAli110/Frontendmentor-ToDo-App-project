@@ -170,6 +170,11 @@ function filterTodos(e) {
           const matchingTodo = todos.find((todo) => {
             return todo.id === itemId;
           });
+
+          if (!matchingTodo) {
+            return;
+          }
+
           if (!matchingTodo.completed) {
             todo.style.display = '';
           } else {
@@ -185,6 +190,11 @@ function filterTodos(e) {
           const matchingTodo = todos.find((todo) => {
             return todo.id === itemId;
           });
+
+          if (!matchingTodo) {
+            return;
+          }
+
           if (matchingTodo.completed) {
             todo.style.display = '';
           } else {
@@ -200,7 +210,7 @@ function filterTodos(e) {
 
 // Clear Completed button
 function clearCompleted() {
-  // Get all todo <li> elements currently displayed on the page
+  // Get all todo <li> elements on the page
   const listItems = document.querySelectorAll('.list-item');
 
   // Find the matching todo using its unique ID
