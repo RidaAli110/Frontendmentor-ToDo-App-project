@@ -29,10 +29,12 @@ function addTodo() {
 
   const newItemText = input.value.trim();
 
-  createTodo(newItemText);
+  const id = crypto.randomUUID();
+
+  createTodo(newItemText, id);
 
   // save the todo to the localStorage todos array
-  addToStorage(newItemText);
+  addToStorage(newItemText, id);
 
   updateItemsLeft();
 
@@ -48,9 +50,10 @@ function addInputText(e) {
 }
 
 // Create the todo
-function createTodo(todoText, completed) {
+function createTodo(todoText, id, completed) {
   const itemLi = document.createElement('li');
   itemLi.classList.add('list-item');
+  itemLi.dataset.uniqueId = id;
 
   if (completed) {
     itemLi.classList.add('is-completed');
@@ -78,13 +81,19 @@ function completed(e) {
   if (completedBtn) {
     const item = completedBtn.closest('.list-item');
 
-    // Find the index number of the todo
-    const items = document.querySelectorAll('.list-item');
-    const itemsArray = Array.from(items);
-    const completedIndex = itemsArray.indexOf(item);
-    // Flip true/false
-    todos[completedIndex].completed = !todos[completedIndex].completed;
-    // Save updated todos array to localStorage
+    // Get the ID of the selected todo
+    const itemId = item.dataset.uniqueId;
+    // Find the todo with the same ID
+    const completedItem = todos.find((todo) => {
+      return todo.id === itemId;
+    });
+    // Stop if the todo could not be found
+    if (!completedItem) {
+      return;
+    }
+
+    // Flip the completed boolean
+    completedItem.completed = !completedItem.completed;
     localStorage.setItem('savedTodos', JSON.stringify(todos));
     updateItemsLeft();
 
@@ -106,18 +115,17 @@ function deleteItem(e) {
   const deleteBtn = e.target.closest('.delete-btn');
   if (deleteBtn) {
     const item = deleteBtn.closest('.list-item');
-
-    // This gets all the list items and converts them into a NodeList
-    const items = document.querySelectorAll('.list-item');
-    // This turns the node list into an array
-    const itemsArray = Array.from(items);
-    // This gets the index number of the item that was selected
-    const deletedIndex = itemsArray.indexOf(item);
-
+    const itemId = item.dataset.uniqueId;
+    const deletedItem = todos.find((todo) => {
+      return todo.id === itemId;
+    });
+    if (!deletedItem) {
+      return;
+    }
     // Remove todo from page
     item.remove();
-    // Remove todo from localStorage
-    removeFromStorage(deletedIndex);
+    // Remove todo from todos array and update localStorage
+    removeFromStorage(deletedItem);
     updateItemsLeft();
   }
 }
@@ -147,19 +155,22 @@ function filterTodos(e) {
 
     switch (e.target.dataset.filter) {
       case 'all':
-        const listItems = listItemsNodeList;
-        const all = Array.from(listItems);
+        const all = listItemsNodeList;
+
         all.forEach((item) => {
           item.style.display = '';
         });
         break;
 
       case 'active':
-        const activeListItems = listItemsNodeList;
-        const active = Array.from(activeListItems);
+        const active = listItemsNodeList;
 
-        active.forEach((todo, index) => {
-          if (!todos[index].completed) {
+        active.forEach((todo) => {
+          const itemId = todo.dataset.uniqueId;
+          const matchingTodo = todos.find((todo) => {
+            return todo.id === itemId;
+          });
+          if (!matchingTodo.completed) {
             todo.style.display = '';
           } else {
             todo.style.display = 'none';
@@ -168,10 +179,13 @@ function filterTodos(e) {
         break;
 
       case 'completed':
-        const completedItems = listItemsNodeList;
-        const completed = Array.from(completedItems);
-        completed.forEach((todo, index) => {
-          if (todos[index].completed) {
+        const completed = listItemsNodeList;
+        completed.forEach((todo) => {
+          const itemId = todo.dataset.uniqueId;
+          const matchingTodo = todos.find((todo) => {
+            return todo.id === itemId;
+          });
+          if (matchingTodo.completed) {
             todo.style.display = '';
           } else {
             todo.style.display = 'none';
@@ -189,10 +203,17 @@ function clearCompleted() {
   // Get all todo <li> elements currently displayed on the page
   const listItems = document.querySelectorAll('.list-item');
 
-  // Check each DOM item against the corresponding todo in the todos array
-  listItems.forEach((item, index) => {
-    // If the corresponding todo is completed, remove it from the page
-    if (todos[index].completed) {
+  // Find the matching todo using its unique ID
+  listItems.forEach((item) => {
+    const itemId = item.dataset.uniqueId;
+    const matchingTodo = todos.find((todo) => {
+      return todo.id === itemId;
+    });
+    if (!matchingTodo) {
+      return;
+    }
+
+    if (matchingTodo.completed) {
       item.remove();
     }
   });
@@ -207,6 +228,8 @@ function clearCompleted() {
 
   // Save the updated todos array to localStorage
   localStorage.setItem('savedTodos', JSON.stringify(todos));
+
+  updateItemsLeft();
 }
 
 // Dark/ Light theme button
@@ -219,7 +242,7 @@ function toggleTheme() {
     headerImg.src = './images/bg-desktop-light.jpg';
     mobileHeaderImg.srcset = './images/bg-mobile-light.jpg';
     themeBtn.setAttribute('aria-label', 'Switch to dark mode');
-    
+
     localStorage.setItem('theme', 'light');
   } else {
     themeIcon.src = './images/icon-sun.svg';
@@ -235,8 +258,10 @@ function toggleTheme() {
 // ---------- LOCAL STORAGE ----------
 
 // Add to localStorage
-function addToStorage(listText) {
+function addToStorage(listText, id) {
   todos.push({
+    // id key and property is shortened original (id: id,)
+    id,
     text: listText,
     completed: false,
   });
@@ -251,7 +276,7 @@ function loadTodosFromStorage() {
   todos = savedItems;
   // When the page refreshes it will get each saved todo from localStorage and recreate it
   savedItems.forEach((todo) => {
-    createTodo(todo.text, todo.completed);
+    createTodo(todo.text, todo.id, todo.completed);
   });
   updateItemsLeft();
 }
@@ -269,12 +294,12 @@ function loadThemeFromStorage() {
 }
 
 // Remove from localStorage
-function removeFromStorage(deletedIndex) {
-  // filter will create a new array so we will use it to update the old todos array
-  todos = todos.filter((todo, index) => {
-    // returns a new todos array without the deleted one
-    return index !== deletedIndex;
+function removeFromStorage(deletedItem) {
+  // Filter out the deleted todo and keep all the remaining todos
+  todos = todos.filter((todo) => {
+    return todo.id !== deletedItem.id;
   });
+
   localStorage.setItem('savedTodos', JSON.stringify(todos));
 }
 
